@@ -1,13 +1,13 @@
 /*
 Author: Noah Jacques
 
+Yields 0 if result would be negative. Does not take negative integers.
+
 */
 public class recursiveSubtractionDef {
 
 	public static void main(String[] args) {
-		int x = 5;
-		int y = 3;
-		System.out.println(minus(x, y));
+		System.out.println(minus(args[0], args[1]));
 	}
 	
 	public static int minus(int x, int y){
