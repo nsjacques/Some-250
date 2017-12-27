@@ -1,4 +1,7 @@
+/*
+Author: Noah Jacques
 
+*/
 public class truthTable {
 
 	public static void main(String[] args) {
