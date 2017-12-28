@@ -3,32 +3,35 @@ Author: Noah Jacques
 
 add option for linear time vs backtracking method
 
+prove this method
+
 */
 public class EightQueens {
 
 	public static void main(String[] args) {
 		int n = Integer.parseInt(args[0]);
 		
-		int[] p = placeQueens(n);
+		int[] placements = placeQueens(n);
 		
-		String o = "";
+		String out = "";
 		int x = 1;
-		for (int y : p){
-			o += String.format("(%d,%d)\n", x,y);
+		for (int y : placements){
+			out += String.format("\n(%d,%d)", x,y);
 			x++;
 		}
 
-		System.out.println(o);
+		System.out.println(out);
 
 	}
 
 
+	//Uses linear time algorithm.
 	private static int[] placeQueens(int n){
 
 		int[] placement;
 
 		if (n%2 == 1){
-			int[] p = placeQueens(n-1);
+			int[] p = placeQueens(n-1);//odd n uses an even n-1 configuration with added (n,n) queen
 			placement = new int[n];
 			for (int i =0; i<n-1; i++){
 				placement[i] = p[i];
@@ -45,6 +48,7 @@ public class EightQueens {
 
 	}
 
+	//Used when n%6 != 2
 	private static int[] method1(int n){
 		int[] p = new int[n];
 		for(int i = 1; i <= n/2; i++){
@@ -54,6 +58,7 @@ public class EightQueens {
 		return p;
 	}
 
+	//Used when n%6 != 0
 	private static int[] method2(int n){
 		int[] p = new int[n];
 		for(int i = 1; i <= n/2; i++){
