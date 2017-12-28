@@ -1,42 +1,77 @@
 /*
 Author: Noah Jacques
 
+add option for linear time vs backtracking method
+
 */
 public class EightQueens {
 
 	public static void main(String[] args) {
-		boolean[][] board = new boolean[8][8];
-		for (int i = 0; i<8; i++){
-			for (int j = 0; j<8; j++){
-				board[i][j] = false;
-			}
-		}
+		int n = Integer.parseInt(args[0]);
 		
-		board = placeQueens(board, 8);
+		int[] p = placeQueens(n);
 		
-		/*
-		 *Brainstorming:
-		 *Put queen in valid spot until all queens are placed
-		 *Go by row
-		 *	for each row check the column (could ignore taken columns)
-		 *Spot is valid if no queen in same column/row/diagonal
-		 *	checking diagonals
-		 *		r++ c++, r-- c--, r++ c--, r--, c++
-		 *			maybe can be more concise
-		 *
-		 *Note: no outside sources used.
-		 *Note: does not work. Stops after 5 properly places queens.
-		 */
-		for (int i = 0; i<8; i++){
-			for (int j = 0; j<8; j++){
-				if (board[i][j]) System.out.print(" Q");
-				else System.out.print(" #");
-			}
-			System.out.println();
+		String o = "";
+		int x = 1;
+		for (int y : p){
+			o += String.format("(%d,%d)\n", x,y);
+			x++;
 		}
 
+		System.out.println(o);
+
+	}
+
+
+	private static int[] placeQueens(int n){
+
+		int[] placement;
+
+		if (n%2 == 1){
+			int[] p = placeQueens(n-1);
+			placement = new int[n];
+			for (int i =0; i<n-1; i++){
+				placement[i] = p[i];
+			}
+			placement[n-1]=n;
+		}
+		else if (n%6 != 2){
+			placement = method1(n);
+		}
+		else{//if (n%6 == 0)
+			placement = method2(n);
+		}
+		return placement;
+
+	}
+
+	private static int[] method1(int n){
+		int[] p = new int[n];
+		for(int i = 1; i <= n/2; i++){
+			p[i-1] = 2*i;
+			p[n/2+i-1] = 2*i-1;
+		}
+		return p;
+	}
+
+	private static int[] method2(int n){
+		int[] p = new int[n];
+		for(int i = 1; i <= n/2; i++){
+			p[i-1] = 1 + (2*i-2+n/2 -1)%n;
+			p[n-i] = n - (2*i-2+n/2-1)%n;
+		}
+		return p;
 	}
 	
+
+
+
+
+	/*
+
+	//Old stuff for nonlinear-time
+
+
 	public static boolean[][] placeQueens(boolean[][] board, int numQueens){
 		if (numQueens < 1) return board;
 		for (int i = 0; i<8; i++){
@@ -108,4 +143,9 @@ public class EightQueens {
 		}
 		return valid;
 	}
+
+	*/
+
+
+
 }
